@@ -1,13 +1,10 @@
-def tradeOrder(exchange, tickerList, leverage, buy, dollarAmount):
+def buildOrder(exchange, tickerList, leverage, buy, dollarAmount):
     buyOrSell = "buy" if buy == "buy" else "sell" 
     sortedList = sorted(tickerList, key=lambda x: -abs(x['percentage']))
-    print(sortedList)
+    boughtList = []
     for ticker in sortedList:
         try:
             amount = dollarAmount*leverage/ticker['close']
-            print('다음의 주문 입력 중')
-            print('ticker: ', ticker['ticker'])
-            print('amount: ', amount)
             exchange.set_leverage(leverage, ticker['ticker'])
             exchange.create_order(
                 symbol = ticker['ticker'], 
@@ -15,5 +12,8 @@ def tradeOrder(exchange, tickerList, leverage, buy, dollarAmount):
                 side=buyOrSell,
                 amount=amount
             )
+            boughtList.append(ticker)
         except:
-            print('주문이 실패하였습니다.')
+            pass
+
+    return boughtList

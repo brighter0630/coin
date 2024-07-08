@@ -27,8 +27,6 @@ def bullCalculator(exchange, tickerList):
     bullTickerList = []
     bearTickerList = []
     tickers = exchange.fetch_tickers()
-    import pprint
-    pprint.pprint(tickers)
     for ticker in tickerList:
         el = {
             'ticker': ticker,
@@ -45,8 +43,8 @@ def bullCalculator(exchange, tickerList):
     print("bullCnt: ", bullCnt)
     print("bearCnt: ", bearCnt)
     if bullCnt > bearCnt :
-        print('returning BearTickerList')
+        print('returning BearTickerList, 강세장에서 약했던 놈들을 Short 할거에요.')
         return 'sell', bearTickerList
     else :
-        print('returning BullTickerList')
+        print('returning BullTickerList, 약세장에서 강했던 놈들을 Long 할거에요.')
         return 'buy', bullTickerList

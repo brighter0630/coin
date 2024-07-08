@@ -1,7 +1,6 @@
 import pandas as pd
 import lib
 import trade
-import pprint
 
 exchange = lib.connectBinance()
 markets = exchange.load_markets()
@@ -11,4 +10,5 @@ usdt_symbols = [x for x in symbols if x.endswith('USDT')]
 balance = lib.getBalance(exchange, 'USDT')
 
 buyOrSell, tradeList = lib.bullCalculator(exchange, symbols)
-trade.tradeOrder(exchange, tradeList, leverage=2, buy=buyOrSell, dollarAmount=10)
+boughtList = trade.buildOrder(exchange, tradeList, leverage=2, buy=buyOrSell, dollarAmount=10)
+print(bought['symbol'] for bought in boughtList)
