@@ -1,4 +1,5 @@
 import ccxt
+import ccxt.pro as ccxtpro
 
 def connectBinance():
     with open('./secret.txt') as f:
@@ -16,6 +17,26 @@ def connectBinance():
     })
 
     return exchange
+
+def connectBinancePro():
+    with open('./secret.txt') as f:
+        lines = f.readlines()
+        api_key = lines[0].strip()
+        api_secret = lines[1].strip()
+
+    exchange = ccxtpro.binance(config={
+        'apiKey': api_key,
+        'secret': api_secret,
+        'enableRateLimit': True,
+        'options': {
+            'defaultType': 'future'
+        }
+    })
+
+    return exchange
+
+def getUSDTOnly(tickerList):
+    return [ticker for ticker in tickerList if ticker.endswith('USDT')]
 
 def getBalance(exchange, type):
     return exchange.fetch_balance()[type]
