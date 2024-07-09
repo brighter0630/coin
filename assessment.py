@@ -1,5 +1,3 @@
-import lib
-
 def assessPortfolio(exchange):
     result = exchange.fetch_balance()
     assetList = list(filter(lambda x: float(x['positionAmt']) != 0, result['info']['positions']))
@@ -34,13 +32,3 @@ def closeAssets(exchange, assetList):
                     'positionSide': 'BOTH'
                 }
             )
-
-exchange = lib.connectBinance()
-
-assetList = assessPortfolio(exchange=exchange)
-stopLossList = getStopLossList(assetList=assetList, limit=-0.05)
-print(stopLossList)
-
-checkCloseFlag = checkClose(assetList=assetList, limit=0.10)
-print('Close Flag: ', checkCloseFlag)
-closeAssets(exchange=exchange, assetList=assetList)

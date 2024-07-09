@@ -18,14 +18,11 @@ def connectBinance():
     return exchange
 
 def getBalance(exchange, type):
-    balance = exchange.fetch_balance()
-    return balance[type]
+    return exchange.fetch_balance()[type]
 
 def bullCalculator(exchange, tickerList):
-    bullCnt = 0
-    bearCnt = 0
-    bullTickerList = []
-    bearTickerList = []
+    bullCnt, bearCnt = 0, 0
+    bullTickerList, bearTickerList = [], []
     tickers = exchange.fetch_tickers()
     for ticker in tickerList:
         el = {
@@ -42,6 +39,7 @@ def bullCalculator(exchange, tickerList):
 
     print("bullCnt: ", bullCnt)
     print("bearCnt: ", bearCnt)
+
     if bullCnt > bearCnt :
         print('returning BearTickerList, 강세장에서 약했던 놈들을 Short 할거에요.')
         return 'sell', bearTickerList
